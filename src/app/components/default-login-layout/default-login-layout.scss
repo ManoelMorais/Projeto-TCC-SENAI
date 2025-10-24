@@ -1,0 +1,32 @@
+@use "../../styles/variables.scss" as *;
+
+main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $mainColor;
+  font-family: $fontFamilyGlobal;
+}
+
+.headerSectionLoginPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: $colortext;
+}
+
+.btnLoginPage {
+  width: 150px;
+  height: 40px;
+  background-color: $backgroundColorComponent;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}

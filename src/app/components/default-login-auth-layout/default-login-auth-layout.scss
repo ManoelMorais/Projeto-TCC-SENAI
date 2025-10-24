@@ -1,0 +1,85 @@
+@use "../../styles/variables.scss" as *;
+
+main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $mainColor;
+  font-family: $fontFamilyGlobal;
+}
+
+.sctInforsAuthentication {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.sctInforsAuthentication h1 {
+  color: $colortext;
+}
+
+.sctInforsAuthentication p {
+  color: $secondColortext;
+  font-size: 1rem;
+}
+
+.sctFormsAuthentication {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 300px;
+  margin-top: 1.5rem;
+}
+
+.sctFormsAuthentication input {
+  width: 100%;
+  height: 45px;
+  padding: 0 10px;
+  border: 2px solid #ccc;
+  background: $backgroundColorComponentInputs;
+  color: $secondColortext;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  border-radius: 5px;
+  font-size: 1rem;
+
+  &[type='number'] {
+     // Chrome, Edge, Safari
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    -moz-appearance: textfield; /* Firefox: remove spinner */
+    appearance: textfield;      /* standard property for other engines */
+    -webkit-appearance: none;   /* extra WebKit fallback */
+  }
+}
+.sctFormsAuthentication input:focus {
+  border-color: $colortext;
+  box-shadow: 0 0 5px rgba(31, 65, 187, 0.5);
+  outline: none;
+}
+
+.sctBtnAuthentication {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8rem;
+}
+
+.sctBtnAuthentication .btnAutentication {
+  width: 150px;
+  height: 40px;
+  background-color: $backgroundColorComponent;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  font-weight:  bold;
+  cursor: pointer;
+}
