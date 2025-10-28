@@ -1,0 +1,344 @@
+<!--
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="form-anomalias">
+
+	1. Nome do solicitante
+	<app-primary-input formControlName="nome" label="1. Nome do solicitante *" inputName="nome" placeholder="Insira sua resposta"></app-primary-input>
+
+	<!-- 2. DRT do solicitante
+	<app-primary-input formControlName="drt" label="2. DRT do solicitante" inputName="drt" placeholder="Insira sua resposta"></app-primary-input>
+
+	<!-- 3. Qual classificação do serviço? (radio)
+	<div class="form-group">
+		<label>3. Qual classificação do serviço? *</label>
+		<div>
+			<label><input type="radio" formControlName="classificacaoServico" value="Manutencao leve"> Manutenção leve</label>
+		</div>
+		<div>
+			<label><input type="radio" formControlName="classificacaoServico" value="Manutencao pesada"> Manutenção Pesada</label>
+		</div>
+		<div>
+			<label><input type="radio" formControlName="classificacaoServico" value="Perdas"> Perdas</label>
+		</div>
+		<div>
+			<label><input type="radio" formControlName="classificacaoServico" value="Comercial/Coi"> Comercial/ Coi</label>
+		</div>
+		<div>
+			<label><input type="radio" formControlName="classificacaoServico" value="Uso mutuo"> Uso mútuo</label>
+		</div>
+		<div>
+			<label><input type="radio" formControlName="classificacaoServico" value="Seguranca"> Segurança</label>
+		</div>
+		<div>
+			<label><input type="radio" formControlName="classificacaoServico" value="Instalacao"> Instalação</label>
+		</div>
+	</div>
+
+	<!-- 4. Manutenção Leve - Tipo de Serviço (exemplo de radios)
+	<div class="form-group">
+		<label>4. Manutenção Leve - Tipo de Serviço</label>
+		<div>
+			<label><input type="radio" formControlName="manutencaoLeveTipo" value="Poste"> Poste</label>
+		</div>
+		<div>
+			<label><input type="radio" formControlName="manutencaoLeveTipo" value="Transformador"> Transformador</label>
+		</div>
+		<div>
+			<label><input type="radio" formControlName="manutencaoLeveTipo" value="CruZeta"> Cruzeta</label>
+		</div>
+		<div>
+			<label><input type="radio" formControlName="manutencaoLeveTipo" value="Limpeza de faixa"> Limpeza de faixa</label>
+		</div>
+	</div>
+
+	<!-- 5. Criticidade do Serviço
+	<div class="form-group">
+		<label>5. Criticidade do Serviço *</label>
+		<div><label><input type="radio" formControlName="criticidade" value="Urgente"> Urgente / Emergência</label></div>
+		<div><label><input type="radio" formControlName="criticidade" value="Critico"> Crítico</label></div>
+		<div><label><input type="radio" formControlName="criticidade" value="Alto"> Alto</label></div>
+		<div><label><input type="radio" formControlName="criticidade" value="Medio"> Médio</label></div>
+		<div><label><input type="radio" formControlName="criticidade" value="Baixo"> Baixo</label></div>
+	</div>
+
+	<!-- 6. Tipo da equipe
+	<div class="form-group">
+		<label>6. Tipo da equipe *</label>
+		<div><label><input type="radio" formControlName="tipoEquipe" value="LVIVA"> LVIVA</label></div>
+		<div><label><input type="radio" formControlName="tipoEquipe" value="LMORTA"> LMORTA</label></div>
+		<div><label><input type="radio" formControlName="tipoEquipe" value="PERDAS"> PERDAS</label></div>
+		<div><label><input type="radio" formControlName="tipoEquipe" value="SEGURANCA"> SEGURANÇA</label></div>
+		<div><label><input type="radio" formControlName="tipoEquipe" value="COMERCIAL/OUTROS"> COMERCIAL/OUTROS</label></div>
+	</div>
+
+	<!-- 7. Chave Abrangência ou Ponto Significativo
+	<app-primary-input formControlName="chaveAbrangencia" label="7. Chave Abrangência ou Ponto Significativo" inputName="chaveAbrangencia" placeholder="Insira sua resposta"></app-primary-input>
+
+	<!-- 8. Localização (Coordenadas)
+	<app-primary-input formControlName="coordenadas" label="8. Localização? (Coordenadas)" inputName="coordenadas" placeholder="Insira sua resposta"></app-primary-input>
+
+	<!-- 9. Observações da Solicitação
+	<app-primary-input formControlName="observacoes" label="9. Observações da Solicitação" inputName="observacoes" placeholder="Insira sua resposta"></app-primary-input>
+
+	<!-- 10. Departamento Responsável
+	<div class="form-group">
+		<label>10. Departamento Responsável? *</label>
+		<div><label><input type="radio" formControlName="departamentoResponsavel" value="DEOP"> DEOP</label></div>
+		<div><label><input type="radio" formControlName="departamentoResponsavel" value="DCMD"> DCMD</label></div>
+		<div><label><input type="radio" formControlName="departamentoResponsavel" value="DESC"> DESC</label></div>
+		<div>
+			<label><input type="radio" formControlName="departamentoResponsavel" value="Outra"> Outra</label>
+			<app-primary-input formControlName="departamentoOutro" inputName="departamentoOutro" placeholder="Outra (especifique)"></app-primary-input>
+		</div>
+	</div>
+
+	<!-- 11. Localidade
+	<app-primary-input formControlName="localidade" label="11. Localidade *" inputName="localidade" placeholder="Insira sua resposta"></app-primary-input>
+
+	<!-- 12. Alimentador
+	<app-primary-input formControlName="alimentador" label="12. Alimentador *" inputName="alimentador" placeholder="Insira sua resposta"></app-primary-input>
+
+	<!-- 13. Número de Atendimento / Ordem de Serviço
+	<app-primary-input formControlName="numeroAtendimento" label="13. Qual Número de Atendimento ou Ordem de Serviço Criada? *" inputName="numeroAtendimento" placeholder="Insira sua resposta"></app-primary-input>
+
+	<!-- 14. Endereço da Nota de Serviço
+	<app-primary-input formControlName="enderecoNota" label="14. Endereço da Nota de Serviço *" inputName="enderecoNota" placeholder="Insira sua resposta"></app-primary-input>
+
+	<!-- 15. Adicionar Fotos da Anomalia
+	<div class="form-group">
+		<label>15. Adicionar Fotos da Anomalia (Pergunta não anônima)</label>
+		<input type="file" (change)="onFilesSelected($event)" multiple />
+	</div>
+
+	<div class="form-actions">
+		<button type="submit">Enviar</button>
+	</div>
+
+</form>
+
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+
+  <!-- DRT
+  <app-primary-input
+    formControlName="drtSolicitante"
+    label="DRT do solicitante *"
+    inputName="drtSolicitante"
+    placeholder="Informe a DRT/Matrícula"
+    type="text">
+  </app-primary-input>
+  <div class="error" *ngIf="form.get('drtSolicitante')?.touched && form.get('drtSolicitante')?.invalid">
+    A DRT é obrigatória.
+  </div>
+
+  <!-- Nome do solicitante
+  <app-primary-input
+    formControlName="nomeSolicitante"
+    label="Nome do solicitante *"
+    inputName="nomeSolicitante"
+    placeholder="Nome"
+    type="text">
+  </app-primary-input>
+  <div class="error" *ngIf="form.get('nomeSolicitante')?.touched && form.get('nomeSolicitante')?.invalid">
+    O nome do solicitante é obrigatório.
+  </div>
+
+  <!-- Classificação do serviço
+  <div class="form-group">
+    <label>Qual classificação do serviço? *</label>
+    <div *ngFor="let item of classificacoes">
+      <input
+        type="radio"
+        [value]="item"
+        formControlName="classificacao"
+        id="classificacao-{{item}}"
+      />
+      <label for="classificacao-{{item}}">{{ item }}</label>
+    </div>
+    <div class="error" *ngIf="form.get('classificacao')?.touched && form.get('classificacao')?.invalid">
+      Selecione uma classificação.
+    </div>
+  </div>
+
+  <!-- Criticidade
+  <div class="form-group">
+    <label>Criticidade do serviço *</label>
+    <div *ngFor="let nivel of criticidades">
+      <input
+        type="radio"
+        [value]="nivel"
+        formControlName="criticidade"
+        id="criticidade-{{nivel}}"
+      />
+      <label for="criticidade-{{nivel}}">{{ nivel }}</label>
+    </div>
+    <div class="error" *ngIf="form.get('criticidade')?.touched && form.get('criticidade')?.invalid">
+      Selecione a criticidade do serviço.
+    </div>
+  </div>
+
+  <!-- Tipo da equipe
+  <div class="form-group">
+    <label>Tipo da equipe *</label>
+    <div *ngFor="let tipo of tiposEquipe">
+      <input
+        type="radio"
+        [value]="tipo"
+        formControlName="tipoEquipe"
+        id="tipoEquipe-{{tipo}}"
+      />
+      <label for="tipoEquipe-{{tipo}}">{{ tipo }}</label>
+    </div>
+    <div class="error" *ngIf="form.get('tipoEquipe')?.touched && form.get('tipoEquipe')?.invalid">
+      Selecione o tipo da equipe.
+    </div>
+  </div>
+
+  <!-- Chave Abrangência
+  <app-primary-input
+    formControlName="chaveAbrangencia"
+    label="Chave Abrangência ou Ponto Significativo"
+    inputName="chaveAbrangencia"
+    placeholder="Digite a chave ou ponto"
+    type="text">
+  </app-primary-input>
+
+  <button type="submit" [disabled]="form.invalid">Enviar</button>
+</form>
+-->
+
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+
+  <!-- Nome -->
+  <app-primary-input
+    formControlName="nomeSolicitante"
+    label="Nome do solicitante *"
+    inputName="nomeSolicitante"
+    placeholder="Insira o nome por extenso"
+    type="text">
+  </app-primary-input>
+
+  <!-- DRT -->
+  <app-primary-input
+    formControlName="drtSolicitante"
+    label="DRT do solicitante *"
+    inputName="drtSolicitante"
+    placeholder="Informe a DRT/Matrícula"
+    type="text">
+  </app-primary-input>
+
+  <!-- Classificação -->
+  <div class="form-group">
+    <label>Classificação do serviço *</label>
+    <div *ngFor="let item of classificacoes">
+      <input type="radio" [value]="item" formControlName="classificacao" id="classificacao-{{item}}">
+      <label for="classificacao-{{item}}">{{ item }}</label>
+    </div>
+  </div>
+
+  <!-- Tipo de serviço (Manutenção Pesada) -->
+  <div class="form-group" *ngIf="form.get('classificacao')?.value === 'Manutenção pesada'">
+    <label>Tipo de Serviço *</label>
+    <div *ngFor="let tipo of tiposManutencao">
+      <input type="radio" [value]="tipo" formControlName="tipoServico" id="tipoServico-{{tipo}}">
+      <label for="tipoServico-{{tipo}}">{{ tipo }}</label>
+    </div>
+  </div>
+
+  <!-- Criticidade -->
+  <div class="form-group">
+    <label>Criticidade do serviço *</label>
+    <div *ngFor="let nivel of criticidades">
+      <input type="radio" [value]="nivel" formControlName="criticidade" id="criticidade-{{nivel}}">
+      <label for="criticidade-{{nivel}}">{{ nivel }}</label>
+    </div>
+  </div>
+
+  <!-- Tipo da equipe -->
+  <div class="form-group">
+    <label>Tipo da equipe *</label>
+    <div *ngFor="let tipo of tiposEquipe">
+      <input type="radio" [value]="tipo" formControlName="tipoEquipe" id="tipoEquipe-{{tipo}}">
+      <label for="tipoEquipe-{{tipo}}">{{ tipo }}</label>
+    </div>
+  </div>
+
+  <!-- Chave Abrangência -->
+  <app-primary-input
+    formControlName="chaveAbrangencia"
+    label="Chave Abrangência ou Ponto Significativo"
+    inputName="chaveAbrangencia"
+    placeholder="Digite a chave ou ponto"
+    type="text">
+  </app-primary-input>
+
+  <!-- Localização -->
+  <app-primary-input
+    formControlName="localizacao"
+    label="Localização (Coordenadas)?"
+    inputName="localizacao"
+    placeholder="Informe as coordenadas"
+    type="text">
+  </app-primary-input>
+
+  <!-- Observações -->
+  <div class="form-group">
+    <label>Observações da Solicitação</label>
+    <textarea formControlName="observacoes" placeholder="Insira suas observações"></textarea>
+  </div>
+
+  <!-- Departamento Responsável -->
+  <div class="form-group">
+    <label>Departamento Responsável *</label>
+    <div *ngFor="let dep of departamentos">
+      <input type="radio" [value]="dep" formControlName="departamento" id="departamento-{{dep}}">
+      <label for="departamento-{{dep}}">{{ dep }}</label>
+    </div>
+  </div>
+
+  <!-- Localidade -->
+  <app-primary-input
+    formControlName="localidade"
+    label="Localidade *"
+    inputName="localidade"
+    placeholder="Código da cidade da solicitação"
+    type="text">
+  </app-primary-input>
+
+  <!-- Alimentador -->
+  <app-primary-input
+    formControlName="alimentador"
+    label="Alimentador *"
+    inputName="alimentador"
+    placeholder="Informe o alimentador"
+    type="text">
+  </app-primary-input>
+
+  <!-- Número de atendimento -->
+  <app-primary-input
+    formControlName="numeroAtendimento"
+    label="Número de Atendimento ou Ordem de Serviço Criada *"
+    inputName="numeroAtendimento"
+    placeholder="Digite o número da OS"
+    type="text">
+  </app-primary-input>
+
+  <!-- Endereço -->
+  <app-primary-input
+    formControlName="endereco"
+    label="Endereço da Nota de Serviço *"
+    inputName="endereco"
+    placeholder="Digite o endereço"
+    type="text">
+  </app-primary-input>
+
+  <!-- Upload de fotos -->
+  <div class="form-group">
+    <label>Adicionar Fotos da Anomalia</label>
+    <input type="file" (change)="onFileSelected($event)" multiple accept="image/*">
+    <div *ngIf="arquivos.length > 0" class="file-list">
+      <p *ngFor="let file of arquivos">{{ file.name }}</p>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="form.invalid">Enviar</button>
+</form>
