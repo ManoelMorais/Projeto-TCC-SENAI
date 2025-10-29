@@ -1,9 +1,12 @@
+@use "../../styles/variables.scss" as *;
+
 form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   max-width: 700px;
   margin: 0 auto;
+  padding: 1.5rem;
 }
 
 label {
@@ -38,8 +41,15 @@ textarea {
   padding: 0.4rem;
 }
 
+input:focus {
+  border-color: $colortext;
+  box-shadow: 0 0 5px rgba(31, 65, 187, 0.5);
+  outline: none;
+}
+
 button {
   align-self: flex-start;
+  width: 160px;
   background-color: #007bff;
   color: #fff;
   font-weight: 600;
@@ -57,4 +67,16 @@ button:hover:not(:disabled) {
 button:disabled {
   background-color: #b0bec5;
   cursor: not-allowed;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.divisor {
+  height: 2px;
+  background-color: grey;
+  margin: 0;
 }

@@ -6,7 +6,7 @@ import { FormularioAnomalias } from './pages/formulario-anomalias/formulario-ano
 
 export const routes: Routes = [
   {
-    path: 'login',
+    path: 'page',
     component: Login,
   },
   {
@@ -23,6 +23,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'login'
+    redirectTo: 'page'
   }
 ];

@@ -18,6 +18,13 @@ main {
   text-align: center;
   margin-bottom: 2rem;
   color: $colortext;
+
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
 }
 
 .btnLoginPage {
@@ -29,4 +36,9 @@ main {
   color: white;
   font-size: 1rem;
   cursor: pointer;
+}
+
+img {
+  width: 75px;
+  height: auto;
 }

@@ -1,74 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PrimaryInput } from '../../components/primary-input/primary-input';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-
-/*
-@Component({
-  selector: 'app-formulario-anomalias',
-  imports: [ReactiveFormsModule, PrimaryInput],
-  templateUrl: './formulario-anomalias.html',
-  styleUrl: './formulario-anomalias.scss'
-})
-export class FormularioAnomalias implements OnInit {
-  form: FormGroup
-
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      // Dados do solicitante
-      nome: ['', Validators.required],
-      drt: [''],
-
-      // Classificação e opções
-      classificacaoServico: ['', Validators.required],
-      manutencaoLeveTipo: [''],
-      criticidade: ['', Validators.required],
-      tipoEquipe: ['', Validators.required],
-
-      // Campos textuais adicionais
-      chaveAbrangencia: [''],
-      coordenadas: [''],
-      observacoes: [''],
-
-      // Departamento responsável
-      departamentoResponsavel: ['', Validators.required],
-      departamentoOutro: [''],
-
-      // Dados da nota / localidade
-      localidade: ['', Validators.required],
-      alimentador: ['', Validators.required],
-      numeroAtendimento: ['', Validators.required],
-      enderecoNota: ['', Validators.required],
-
-      // Uploads
-      fotos: [null]
-    })
-  }
-
-  ngOnInit(): void {}
-
-  onFilesSelected(event: Event) {
-    const input = event.target as HTMLInputElement
-    if (!input.files) return
-    const files = Array.from(input.files)
-    // armazenar arquivos no form control (pode ser processado no submit)
-    this.form.patchValue({ fotos: files })
-  }
-
-  submit() {
-    if (this.form.valid) {
-      const value = { ...this.form.value }
-      // transformar FileList em metadados se necessário
-      console.log('Formulário enviado', value)
-      // TODO: enviar para API
-    } else {
-      this.form.markAllAsTouched()
-    }
-  }
-}
-*/
+import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Map } from "../../map/map";
 
 @Component({
   selector: 'app-formulario-anomalias',
@@ -77,11 +12,20 @@ export class FormularioAnomalias implements OnInit {
   imports: [
     PrimaryInput,
     ReactiveFormsModule,
-    CommonModule
-  ],
+    CommonModule,
+    RouterModule,
+    Map
+],
   standalone: true
 })
 export class FormularioAnomalias implements OnInit {
+
+  constructor(private fb: FormBuilder, private router: Router) {}
+
+  voltar() {
+    this.router.navigate(['/home']);
+  }
+
   form!: FormGroup;
   arquivos: File[] = [];
 
@@ -91,9 +35,10 @@ export class FormularioAnomalias implements OnInit {
   tiposEquipe = ['LVIVA', 'LMORTA', 'PERDAS', 'SEGURANÇA', 'COMERCIAL/OUTROS'];
   departamentos = ['DEOP', 'DCMD', 'DESC', 'Outra'];
 
-  constructor(private fb: FormBuilder) {}
-
   ngOnInit() {
+    const now = new Date();
+    const nowForInput = this.toDateTimeLocal(now); // yyyy-MM-ddTHH:mm for datetime-local
+
     this.form = this.fb.group({
       nomeSolicitante: ['', Validators.required],
       drtSolicitante: ['', Validators.required],
@@ -109,8 +54,24 @@ export class FormularioAnomalias implements OnInit {
       alimentador: ['', Validators.required],
       numeroAtendimento: ['', Validators.required],
       endereco: ['', Validators.required],
-      fotos: [null]
+      fotos: [null],
+      // campo de data/hora preenchido automaticamente com a hora local do usuário
+      dataSolicitacao: [nowForInput]
     });
+  }
+
+  /**
+   * Converte uma Date em string no formato aceito por <input type="datetime-local">:
+   * YYYY-MM-DDTHH:MM (sem timezone)
+   */
+  private toDateTimeLocal(date: Date): string {
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    const yyyy = date.getFullYear();
+    const mm = pad(date.getMonth() + 1);
+    const dd = pad(date.getDate());
+    const hh = pad(date.getHours());
+    const min = pad(date.getMinutes());
+    return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
   }
 
   onFileSelected(event: Event) {
