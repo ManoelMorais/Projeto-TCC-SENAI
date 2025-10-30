@@ -26,10 +26,11 @@
 
         input {
             border: none;
-            border-radius: 8px 0 0 8px;
+            border-radius: 8px;
             background-color: $backgroundColorComponentInputs;
             padding: 12px 0 12px 20px;
             width: 100%;
+            border:  2px solid gray;
         }
     }
 }

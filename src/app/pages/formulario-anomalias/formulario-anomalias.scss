@@ -43,7 +43,7 @@ textarea {
 
 input:focus {
   border-color: $colortext;
-  box-shadow: 0 0 5px rgba(31, 65, 187, 0.5);
+  box-shadow: 0 0 5px orange;
   outline: none;
 }
 
@@ -79,4 +79,13 @@ button:disabled {
   height: 2px;
   background-color: grey;
   margin: 0;
+}
+
+.date_Solicitacao {
+  justify-content: center;
+  align-items: center;
+  width: 190px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }

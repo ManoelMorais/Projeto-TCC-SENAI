@@ -9,7 +9,7 @@ export class MapService {
   constructor(private http: HttpClient) { }
 
   reverseGeocode(latitude: number, longitude: number): Observable<any> {
-    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
+    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`;
     return this.http.get(url);
   }
   reverseGeocodeGoogle?(latitude: number, longitude: number): Observable<any> {

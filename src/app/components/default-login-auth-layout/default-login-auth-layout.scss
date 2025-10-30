@@ -10,17 +10,6 @@ main {
   font-family: $fontFamilyGlobal;
 }
 
-.sctMain {
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
-  border:  2px solid $backgroundColorComponent;
-  width: 400px;
-  max-width: 90%;
-}
-
 .sctInforsAuthentication {
   display: flex;
   flex-direction: column;

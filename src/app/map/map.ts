@@ -3,6 +3,7 @@ import { MapService } from '../map-service/map-service';
 
 @Component({
   selector: 'app-map',
+  standalone: true,
   templateUrl: './map.html',
   styleUrls: ['./map.scss']
 })
