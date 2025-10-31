@@ -1,83 +1,60 @@
-
-<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-
-  <!-- Nome -->
-   <div>
-    <label>Formulário de Anomalias - (SIAA)</label>
-   </div>
-   <div class="form-group">
-     <label>Data/Hora da Solicitação</label>
-     <input formControlName="dataSolicitacao" type="datetime-local" readonly class="date_Solicitacao">
-   </div>
-
-   <div class="divisor"></div>
-
-  <!-- Nome do solicitante -->
-   <div class="form-group">
-    <label>Nome do solicitante *</label>
-     <app-primary-input
-       formControlName="nomeSolicitante"
-       label="Nome do solicitante *"
-       inputName="nomeSolicitante"
-       placeholder="Insira o nome por extenso"
-       type="text">
-     </app-primary-input>
-   </div>
-
-  <!-- DRT -->
-   <div class="form-group">
-    <label>DRT do solicitante *</label>
-    <app-primary-input
-      formControlName="drtSolicitante"
-      label="DRT do solicitante *"
-      inputName="drtSolicitante"
-      placeholder="Informe a DRT/Matrícula"
-      type="text">
-    </app-primary-input>
-   </div>
-
-   <div class="divisor"></div>
-
-  <!-- Classificação -->
-  <div class="form-group">
-    <label>Classificação do serviço *</label>
-    <div *ngFor="let item of classificacoes">
-      <input type="radio" [value]="item" formControlName="classificacao" id="classificacao-{{item}}">
-      <label for="classificacao-{{item}}">{{ item }}</label>
-    </div>
-  </div>
-
-  <!-- Tipo de serviço (Manutenção Pesada) -->
-  <div class="form-group" *ngIf="form.get('classificacao')?.value === 'Manutenção pesada'">
-    <label>Tipo de Serviço *</label>
-    <div *ngFor="let tipo of tiposManutencao">
-      <input type="radio" [value]="tipo" formControlName="tipoServico" id="tipoServico-{{tipo}}">
-      <label for="tipoServico-{{tipo}}">{{ tipo }}</label>
-    </div>
-  </div>
-
-  <!-- Criticidade -->
-  <div class="form-group">
-    <label>Criticidade do serviço *</label>
-    <div *ngFor="let nivel of criticidades">
-      <input type="radio" [value]="nivel" formControlName="criticidade" id="criticidade-{{nivel}}">
-      <label for="criticidade-{{nivel}}">{{ nivel }}</label>
-    </div>
-  </div>
-
-  <!-- Tipo da equipe -->
-  <div class="form-group">
-    <label>Tipo da equipe *</label>
-    <div *ngFor="let tipo of tiposEquipe">
-      <input type="radio" [value]="tipo" formControlName="tipoEquipe" id="tipoEquipe-{{tipo}}">
-      <label for="tipoEquipe-{{tipo}}">{{ tipo }}</label>
-    </div>
+<form [formGroup]="form">
+  <div>
+    <label class="form-title">Formulário de Registro de Anomalias - (SIAA)</label>
   </div>
 
   <div class="divisor"></div>
 
-  <!-- Chave Abrangência -->
-   <div class="form-group">
+  <div class="form-group">
+    <label>Data/Hora da Solicitação</label>
+    <input formControlName="dataSolicitacao" type="datetime-local" readonly class="primary-field date_Solicitacao">
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="form-group">
+    <label>Função/Equipe do Registrador *</label>
+    <select formControlName="funcaoRegistrador" class="cxSelect">
+      <option value="" disabled selected>Selecione a Função</option>
+      <option *ngFor="let funcao of funcoesRegistrador" [value]="funcao" >{{ funcao }}</option>
+    </select>
+    <app-primary-input
+      *ngIf="form.get('funcaoRegistrador')?.value === 'Outro'"
+      formControlName="funcaoRegistradorOutro"
+      label="Especifique a Função"
+      placeholder="Especifique: Eletricista de CCO, etc."
+      type="text">
+    </app-primary-input>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="form-group">
+    <label>Tipo de Rede Afetada *</label>
+    <select formControlName="tipoRedeAfetada" class="cxSelect">
+      <option value="" disabled selected>Selecione o Tipo de Rede</option>
+      <option *ngFor="let rede of tiposRede" [value]="rede" >{{ rede }}</option>
+    </select>
+    <app-primary-input
+      *ngIf="form.get('tipoRedeAfetada')?.value === 'Outro'"
+      formControlName="tipoRedeAfetadaOutro"
+      label="Especifique a Rede Afetada"
+      placeholder="Ex: Rede Interna, Iluminação Pública"
+      type="text">
+    </app-primary-input>
+  </div>
+
+  <div class="form-group">
+    <label>Ativo/Identificação da Estrutura Mais Próxima</label>
+    <app-primary-input
+      formControlName="identificacaoEstrutura"
+      label="Identificação da Estrutura"
+      placeholder="Ex: Número do Poste, Torre ou Subestação"
+      type="text">
+    </app-primary-input>
+  </div>
+
+  <div class="form-group">
     <label>Chave Abrangência ou Ponto Significativo</label>
     <app-primary-input
       formControlName="chaveAbrangencia"
@@ -86,66 +63,177 @@
       placeholder="Digite a chave ou ponto"
       type="text">
     </app-primary-input>
-   </div>
+  </div>
+
+  <div class="form-group">
+    <label>Alimentador *</label>
+    <app-primary-input
+    formControlName="alimentador"
+    label="Alimentador *"
+    inputName="alimentador"
+    placeholder="Informe o alimentador"
+    type="text">
+  </app-primary-input>
+  </div>
 
 
-   <!-- Departamento Responsável -->
-   <div class="form-group">
-     <label>Departamento Responsável *</label>
-     <div *ngFor="let dep of departamentos">
-       <input type="radio" [value]="dep" formControlName="departamento" id="departamento-{{dep}}">
+
+  <div class="divisor"></div>
+
+  <div class="form-group">
+    <label>Tipo de Anomalia (Classificação Primária) *</label>
+    <select formControlName="tipoAnomalia" class="cxSelect">
+      <option value="" disabled selected>Selecione a Classificação</option>
+      <option *ngFor="let tipo of tiposAnomalia" [value]="tipo" >{{ tipo }}</option>
+    </select>
+    <app-primary-input
+      *ngIf="form.get('tipoAnomalia')?.value === 'Outro'"
+      formControlName="tipoAnomaliaOutro"
+      label="Especifique a Anomalia"
+      placeholder="Especifique o tipo de anomalia"
+      type="text">
+    </app-primary-input>
+  </div>
+
+  <div class="form-group">
+    <label>Componente/Equipamento Específico Afetado *</label>
+    <select formControlName="componenteAfetado" class="cxSelect">
+      <option value="" disabled selected>Selecione o Componente</option>
+      <option *ngFor="let comp of componentesAfetados" [value]="comp" >{{ comp }}</option>
+    </select>
+    <app-primary-input
+      *ngIf="form.get('componenteAfetado')?.value === 'Outro'"
+      formControlName="componenteAfetadoOutro"
+      label="Especifique o Componente"
+      placeholder="Especifique o componente afetado"
+      type="text">
+    </app-primary-input>
+  </div>
+
+  <div class="form-group">
+    <label>Gravidade/Urgência da Situação *</label>
+    <div *ngFor="let gravidade of criticidades"> <input type="radio" [value]="gravidade" formControlName="criticidade" id="criticidade-{{gravidade}}">
+      <label for="criticidade-{{gravidade}}">{{ gravidade }}</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Há Interrupção de Energia Associada? *</label>
+    <div *ngFor="let interr of tiposInterrupcao">
+      <input
+        type="radio"
+        [value]="interr"
+        formControlName="interrupcao">
+      <label>{{ interr }}</label>
+    </div>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="form-group">
+    <label>Classificação do serviço *</label>
+    <div *ngFor="let item of classificacoes">
+      <input type="radio" [value]="item" formControlName="classificacao" id="classificacao-{{item}}">
+      <label for="classificacao-{{item}}">{{ item }}</label>
+    </div>
+  </div>
+
+  <div class="form-group" *ngIf="form.get('classificacao')?.value === 'Manutenção pesada'">
+    <label>Tipo de Serviço *</label>
+    <div *ngFor="let tipo of tiposManutencao">
+      <input type="radio" [value]="tipo" formControlName="tipoServico" id="tipoServico-{{tipo}}">
+      <label for="tipoServico-{{tipo}}">{{ tipo }}</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Tipo da equipe *</label>
+    <div *ngFor="let tipo of tiposEquipe">
+      <input type="radio" [value]="tipo" formControlName="tipoEquipe" id="tipoEquipe-{{tipo}}">
+      <label for="tipoEquipe-{{tipo}}">{{ tipo }}</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Departamento Responsável *</label>
+    <div *ngFor="let dep of departamentos">
+      <input type="radio" [value]="dep" formControlName="departamento" id="departamento-{{dep}}">
       <label for="departamento-{{dep}}">{{ dep }}</label>
     </div>
   </div>
 
-
-  <!-- Alimentador -->
   <div class="form-group">
-     <label>Alimentador *</label>
-     <app-primary-input
-     formControlName="alimentador"
-     label="Alimentador *"
-     inputName="alimentador"
-     placeholder="Informe o alimentador"
-     type="text">
+    <label>Número de Atendimento ou Ordem de Serviço Criada *</label>
+    <app-primary-input
+    formControlName="numeroAtendimento"
+    label="Número de Atendimento ou Ordem de Serviço Criada *"
+    inputName="numeroAtendimento"
+    placeholder="Digite o número da OS"
+    type="text">
+  </app-primary-input>
+  </div>
+
+  <div class="form-group">
+    <label>Condição de Acesso ao Local *</label>
+    <select formControlName="condicaoAcesso" class="cxSelect">
+      <option value="" disabled selected>Selecione a Condição</option>
+      <option *ngFor="let acesso of condicoesAcesso" [value]="acesso" >{{ acesso }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>A equipe tomou alguma Ação Mitigadora Imediata? *</label>
+    <div *ngFor="let acao of acoesMitigadoras; let i = index" class="radio-row">
+      <input type="radio" [value]="acao" formControlName="acaoMitigadora" id="acaoMitigadora-{{i}}">
+      <label for="acaoMitigadora-{{i}}">{{ acao }}</label>
+    </div>
+
+    <textarea *ngIf="form.get('acaoMitigadora')?.value?.includes('Sim')"
+      formControlName="qualAcaoMitigadora"
+      placeholder="Se sim, qual ação foi tomada? (Ex: Sinalização, Isolamento da área)">
+    </textarea>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="form-group">
+    <label>Descrição Detalhada da Anomalia *</label>
+    <textarea formControlName="observacoes" placeholder="Insira uma descrição breve e objetiva, focando nos detalhes do problema"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Causa Provável da Anomalia (Opinião do Registrador)</label>
+    <select formControlName="causaProvavel" class="cxSelect">
+      <option value="" disabled selected>Selecione a Causa Provável</option>
+      <option *ngFor="let causa of causasProvaveis" [value]="causa">{{ causa }}</option>
+    </select>
+    <app-primary-input
+      *ngIf="form.get('causaProvavel')?.value === 'Outro'"
+      formControlName="causaProvavelOutro"
+      label="Especifique a Causa"
+      placeholder="Especifique a causa provável"
+      type="text">
     </app-primary-input>
   </div>
 
-    <!-- Número de atendimento -->
-    <div class="form-group">
-      <label>Número de Atendimento ou Ordem de Serviço Criada *</label>
-      <app-primary-input
-      formControlName="numeroAtendimento"
-      label="Número de Atendimento ou Ordem de Serviço Criada *"
-      inputName="numeroAtendimento"
-      placeholder="Digite o número da OS"
-      type="text">
-  </app-primary-input>
-</div>
-
-<div class="divisor"></div>
-
-<!-- Localização -->
-<app-map></app-map>
-
- <!-- Observações -->
- <div class="form-group">
-  <label>Observações da Solicitação</label>
-  <textarea formControlName="observacoes" placeholder="Insira suas observações"></textarea>
-</div>
-
-<!-- Upload de fotos -->
-<div class="form-group">
-  <label>Adicionar Fotos da Anomalia</label>
-  <input type="file" (change)="onFileSelected($event)" multiple accept="image/*">
-  <div *ngIf="arquivos.length > 0" class="file-list">
-    <p *ngFor="let file of arquivos">{{ file.name }}</p>
+  <div class="form-group">
+    <label>Observações Adicionais para a Equipe de Resposta</label>
+    <textarea formControlName="observacoesAdicionais" placeholder="Detalhes extras, como contato local, perigos não listados, etc."></textarea>
   </div>
-</div>
 
-<div class="form-actions">
-  <button type="submit" [disabled]="form.invalid">Enviar</button>
-  <button type="button" (click)="voltar()">Voltar</button>
-</div>
+  <div class="form-group">
+    <label>Adicionar Fotos da Anomalia/Local</label>
+    <input class="primary-field" type="file" (change)="onFileSelected($event)" multiple accept="image/*,video/*">
+    <div *ngIf="arquivos.length > 0" class="file-list">
+      <p *ngFor="let file of arquivos">{{ file.name }}</p>
+    </div>
+  </div>
+
+  <app-map></app-map>
+
+  <div class="form-actions">
+    <button type="submit" [disabled]="form.invalid">Enviar</button>
+    <button type="button" (click)="voltar()">Voltar</button>
+  </div>
 
 </form>

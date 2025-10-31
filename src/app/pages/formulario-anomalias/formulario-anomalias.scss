@@ -89,3 +89,58 @@ button:disabled {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+/* padrão visual reutilizável para inputs nativos, selects e file inputs */
+.primary-field {
+  border: none;
+  border-radius: 8px;
+  background-color: $backgroundColorComponentInputs;
+  padding: 12px 12px 12px 20px;
+  width: 100%;
+  border: 2px solid gray;
+  box-sizing: border-box;
+}
+
+.date_Solicitacao {
+  width: 190px;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.cxSelect {
+  @extend .primary-field;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px 8px;
+  padding-right: 40px;
+}
+
+input[type="file"].primary-field {
+  padding: 8px 12px;
+}
+
+.primary-field:focus, .cxSelect:focus, input[type="file"].primary-field:focus {
+  border-color: $colortext;
+  box-shadow: 0 0 6px rgba(0,0,0,0.08), 0 0 0 3px rgba(255,165,0,0.12);
+  outline: none;
+}
+
+.radio-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.form-group select {
+  border: none;
+  border-radius: 8px;
+  background-color: $backgroundColorComponentInputs;
+  padding: 12px 0 12px 20px;
+  width: 100%;
+  border:  2px solid gray;
+}
