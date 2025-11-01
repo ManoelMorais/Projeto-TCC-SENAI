@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { RouterLink } from "@angular/router";
+
+type InputTypes = "button";
 
 @Component({
   selector: 'app-default-layout-footer',
@@ -8,5 +10,4 @@ import { RouterLink } from "@angular/router";
   styleUrl: './default-layout-footer.scss'
 })
 export class DefaultLayoutFooter {
-
 }
