@@ -37,6 +37,19 @@ main {
   gap: 1.5rem;
   width: 300px;
   margin-top: 1.5rem;
+
+}
+
+.inforText {
+    font-size: 0.9rem;
+    line-height: 1.2;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+
+    align-self: flex-start;
+    background: $colortext;
+    color: $mainColor;
+    margin-bottom: 0.5rem;
 }
 
 .sctFormsAuthentication input {

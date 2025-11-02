@@ -5,11 +5,17 @@
       <p>Bem Vindo ao Nosso Sistema!</p>
     </section>
     <section class="sctFormsAuthentication">
-      <input type="number" name="DRT" id="DRT" placeholder="Digite seu DRT" />
-      <input type="password" name="password" id="password" placeholder="Digite sua Senha" />
+      <!-- Usamos referências de template para ler os valores sem FormsModule -->
+  <input #drtInput type="number" name="DRT" id="DRT" placeholder="Digite seu DRT" (input)="onInputChange()" />
+  <input #passwordInput type="password" name="password" id="password" placeholder="Digite sua Senha" (input)="onInputChange()" />
     </section>
     <section class="sctBtnAuthentication">
-      <button class="btnAutentication" [routerLink]="['/home']">Entrar</button>
+      <!-- Ao clicar chamamos submit com os valores -->
+      <button class="btnAutentication" (click)="submit(drtInput.value, passwordInput.value)" [disabled]="isLoading">
+        <span class="inforText" *ngIf="!isLoading">Entrar</span>
+        <span class="inforText" *ngIf="isLoading">Aguarde...</span>
+      </button>
+      <div class="login-error" *ngIf="error" style="color: #b00020; margin-top: 12px">{{ error }}</div>
     </section>
   </section>
 </main>
