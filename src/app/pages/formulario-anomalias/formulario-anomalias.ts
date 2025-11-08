@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PrimaryInput } from '../../components/primary-input/primary-input';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
+import { LoginService } from '../../services/login-service';
+import { Subscription } from 'rxjs';
 import { Map } from "../../map/map";
 
 @Component({
@@ -22,7 +24,9 @@ export class FormularioAnomalias implements OnInit {
 
 
   form!: FormGroup;
-  constructor(private fb: FormBuilder, private router: Router) {}
+  private userSub: Subscription | null = null;
+
+  constructor(private fb: FormBuilder, private router: Router, private loginService: LoginService) {}
 
   voltar() {
     this.router.navigate(['/home']);
@@ -142,6 +146,38 @@ export class FormularioAnomalias implements OnInit {
     });
 
     this.form.get('dataSolicitacao')?.setValue(this.getCurrentDateTime());
+
+    // Preencher nome, drt e cargo a partir do login, se disponível
+    const user = this.loginService.getUser();
+    this.applyUserToForm(user);
+
+    // também escutar mudanças assíncronas (caso o login ocorra depois)
+    this.userSub = this.loginService.user$.subscribe(u => {
+      if (u) this.applyUserToForm(u);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.userSub?.unsubscribe();
+  }
+
+  private applyUserToForm(user: any | null) {
+    if (!user) return;
+    this.form.get('nomeSolicitante')?.setValue(user.nome ?? '');
+    this.form.get('drtSolicitante')?.setValue(user.drt ?? '');
+
+    const cargo = (user.cargo ?? '').toString();
+    if (cargo) {
+      const match = this.funcoesRegistrador.find(f => f.toLowerCase() === cargo.toLowerCase());
+      if (match) {
+        this.form.get('funcaoRegistrador')?.setValue(match);
+      } else if (this.funcoesRegistrador.includes('Outro')) {
+        this.form.get('funcaoRegistrador')?.setValue('Outro');
+        this.form.get('funcaoRegistradorOutro')?.setValue(cargo);
+      } else {
+        this.form.get('funcaoRegistrador')?.setValue(cargo);
+      }
+    }
   }
 
   getCurrentDateTime(): string {

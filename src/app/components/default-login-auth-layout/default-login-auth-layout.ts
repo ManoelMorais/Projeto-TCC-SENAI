@@ -56,8 +56,15 @@ export class DefaultLoginAuthLayout {
         })
       )
       .subscribe({
-        next: () => {
-          // loginService já salva o token no localStorage
+        next: (res: any) => {
+          // loginService já salva o token no localStorage via tap,
+          // mas em alguns casos os nomes dos campos podem variar —
+          // garantimos que o serviço mapeie corretamente a resposta.
+          try {
+            this.loginService.setUserFromResponse(res);
+          } catch (e) {
+            console.warn('Could not map user from login response', e);
+          }
           this.router.navigate(['/home']);
         },
         error: (err) => {
