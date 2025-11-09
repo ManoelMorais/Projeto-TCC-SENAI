@@ -22,6 +22,7 @@ import { Map } from "../../map/map";
 })
 export class FormularioAnomalias implements OnInit {
 
+  showSuccess: boolean = false;
 
   form!: FormGroup;
   private userSub: Subscription | null = null;
@@ -35,7 +36,6 @@ export class FormularioAnomalias implements OnInit {
   arquivos: File[] = [];
 
   classificacoes = ['Manutenção pesada', 'Inspeção', 'Emergência'];
-  tiposManutencao = ['Tipo A', 'Tipo B', 'Tipo C'];
   tiposEquipe = ['Própria', 'Terceirizada'];
   departamentos = ['Operação', 'Planejamento', 'Manutenção'];
 
@@ -111,7 +111,7 @@ export class FormularioAnomalias implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       dataSolicitacao: [{ value: this.getCurrentDateTime(), disabled: true }],
-      dataDeteccao: [null, Validators.required],
+  dataDeteccao: [this.getCurrentDateTime(), Validators.required],
       nomeSolicitante: [{ value: 'Nome Automático (Via Login)', disabled: true }, Validators.required],
       drtSolicitante: [{ value: 'DRT Automática (Via Login)', disabled: true }, Validators.required],
       funcaoRegistrador: [null, Validators.required],
@@ -121,7 +121,7 @@ export class FormularioAnomalias implements OnInit {
       tipoRedeAfetadaOutro: [''],
       identificacaoEstrutura: [''],
       chaveAbrangencia: [''],
-      alimentador: ['', Validators.required],
+      alimentador: [''],
 
       tipoAnomalia: [null, Validators.required],
       tipoAnomaliaOutro: [''],
@@ -131,10 +131,9 @@ export class FormularioAnomalias implements OnInit {
       interrupcao: [null, Validators.required],
 
       classificacao: [null, Validators.required],
-      tipoServico: [''], // Condicional
-      tipoEquipe: [null, Validators.required],
-      departamento: [null, Validators.required],
-      numeroAtendimento: ['', Validators.required],
+      tipoServico: [''],
+      tipoEquipe: [null],
+      departamento: [null],
       condicaoAcesso: [null, Validators.required],
       acaoMitigadora: [null, Validators.required],
       qualAcaoMitigadora: [''],
@@ -147,11 +146,9 @@ export class FormularioAnomalias implements OnInit {
 
     this.form.get('dataSolicitacao')?.setValue(this.getCurrentDateTime());
 
-    // Preencher nome, drt e cargo a partir do login, se disponível
     const user = this.loginService.getUser();
     this.applyUserToForm(user);
 
-    // também escutar mudanças assíncronas (caso o login ocorra depois)
     this.userSub = this.loginService.user$.subscribe(u => {
       if (u) this.applyUserToForm(u);
     });
@@ -207,15 +204,24 @@ export class FormularioAnomalias implements OnInit {
     this.arquivos = this.arquivos.filter(f => f !== file);
   }
 
-    submit() {
+  submit() {
     if (this.form.valid) {
       console.log('Dados enviados:', this.form.value);
       console.log('Arquivos:', this.arquivos);
-      alert('Formulário enviado com sucesso!');
-      this.form.reset();
+      this.showSuccess = true;
+      this.form.markAsPristine();
       this.arquivos = [];
     } else {
       this.form.markAllAsTouched();
     }
+  }
+
+  goHome() {
+    this.showSuccess = false;
+    this.router.navigate(['/home']);
+  }
+
+  closeModal() {
+    this.showSuccess = false;
   }
 }

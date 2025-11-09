@@ -6,7 +6,6 @@ import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { AuthInterceptor } from './services/auth.interceptor';
 
-// Providencia o HttpClient para toda a aplicação (necessário para MapService)
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),

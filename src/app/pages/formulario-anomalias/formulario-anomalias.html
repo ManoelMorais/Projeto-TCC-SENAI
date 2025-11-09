@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<form [formGroup]="form" (ngSubmit)="submit()">
   <div>
     <label class="form-title">Formulário de Registro de Anomalias - (SIAA)</label>
   </div>
@@ -48,7 +48,6 @@
     <label>Ativo/Identificação da Estrutura Mais Próxima</label>
     <app-primary-input
       formControlName="identificacaoEstrutura"
-      label="Identificação da Estrutura"
       placeholder="Ex: Número do Poste, Torre ou Subestação"
       type="text">
     </app-primary-input>
@@ -58,7 +57,6 @@
     <label>Chave Abrangência ou Ponto Significativo</label>
     <app-primary-input
       formControlName="chaveAbrangencia"
-      label="Chave Abrangência ou Ponto Significativo"
       inputName="chaveAbrangencia"
       placeholder="Digite a chave ou ponto"
       type="text">
@@ -69,14 +67,11 @@
     <label>Alimentador</label>
     <app-primary-input
     formControlName="alimentador"
-    label="Alimentador"
     inputName="alimentador"
     placeholder="Informe o alimentador"
     type="text">
   </app-primary-input>
   </div>
-
-
 
   <div class="divisor"></div>
 
@@ -138,39 +133,12 @@
     </div>
   </div>
 
-  <div class="form-group" *ngIf="form.get('classificacao')?.value === 'Manutenção pesada'">
-    <label>Tipo de Serviço *</label>
-    <div *ngFor="let tipo of tiposManutencao">
-      <input type="radio" [value]="tipo" formControlName="tipoServico" id="tipoServico-{{tipo}}">
-      <label for="tipoServico-{{tipo}}">{{ tipo }}</label>
-    </div>
-  </div>
-
   <div class="form-group">
-    <label>Tipo da equipe *</label>
-    <div *ngFor="let tipo of tiposEquipe">
-      <input type="radio" [value]="tipo" formControlName="tipoEquipe" id="tipoEquipe-{{tipo}}">
-      <label for="tipoEquipe-{{tipo}}">{{ tipo }}</label>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label>Departamento Responsável *</label>
+    <label>Departamento Responsável</label>
     <div *ngFor="let dep of departamentos">
       <input type="radio" [value]="dep" formControlName="departamento" id="departamento-{{dep}}">
       <label for="departamento-{{dep}}">{{ dep }}</label>
     </div>
-  </div>
-
-  <div class="form-group">
-    <label>Número de Atendimento ou Ordem de Serviço Criada *</label>
-    <app-primary-input
-    formControlName="numeroAtendimento"
-    label="Número de Atendimento ou Ordem de Serviço Criada *"
-    inputName="numeroAtendimento"
-    placeholder="Digite o número da OS"
-    type="text">
-  </app-primary-input>
   </div>
 
   <div class="form-group">
@@ -232,8 +200,19 @@
   <app-map></app-map>
 
   <div class="form-actions">
-    <button type="submit" [disabled]="form.invalid">Enviar</button>
+    <button type="submit" [disabled]="form.invalid" [class.active]="form.valid">Enviar</button>
     <button type="button" (click)="voltar()">Voltar</button>
+  </div>
+
+  <div class="modal-overlay" *ngIf="showSuccess">
+    <div class="modal">
+      <h3>Solicitação concluída</h3>
+      <p>Sua solicitação foi enviada com sucesso. Em breve a equipe responsável irá avaliar.</p>
+      <div class="modal-actions">
+        <button type="button" (click)="goHome()">Tela Inicial</button>
+        <button type="button" class="secondary" (click)="closeModal()">Fechar</button>
+      </div>
+    </div>
   </div>
 
 </form>

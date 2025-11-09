@@ -25,7 +25,6 @@ export class LoginService {
         const token = res?.token;
         if (token) {
           localStorage.setItem(this.tokenKey, token);
-          // store user info for UI (try multiple possible response fields)
           this.setUserFromResponse(res);
         }
       })
@@ -33,12 +32,15 @@ export class LoginService {
   }
 
   getToken(): string | null {
+    if (!this.isBrowser()) return null;
     return localStorage.getItem(this.tokenKey);
   }
 
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem(this.userKey);
+    if (this.isBrowser()) {
+      localStorage.removeItem(this.tokenKey);
+      localStorage.removeItem(this.userKey);
+    }
     this.userSubject.next(null);
   }
 
@@ -77,7 +79,9 @@ export class LoginService {
 
     const user = { nome, cargo, drt };
     try {
-      localStorage.setItem(this.userKey, JSON.stringify(user));
+      if (this.isBrowser()) {
+        localStorage.setItem(this.userKey, JSON.stringify(user));
+      }
       this.userSubject.next(user);
     } catch (e) {
       console.warn('Failed to persist user info', e);
@@ -87,7 +91,7 @@ export class LoginService {
   private readUserFromStorage(): { nome: string; cargo: string; drt: number } | null {
     try {
       // durante server-side rendering (prerender) localStorage não existe
-      if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+      if (!this.isBrowser()) {
         return null;
       }
       const raw = localStorage.getItem(this.userKey);
@@ -95,6 +99,14 @@ export class LoginService {
       return JSON.parse(raw);
     } catch (e) {
       return null;
+    }
+  }
+
+  private isBrowser(): boolean {
+    try {
+      return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+    } catch (e) {
+      return false;
     }
   }
 }

@@ -1,35 +1,53 @@
 @use "../../styles/variables.scss" as *;
 
 .input-wrapper {
-    color: $backgroundColorComponentInputs;
+    /* label/text color should be a visible (dark) color */
+    color: $colortext;
     font-size: 16px;
     text-align: start;
 
     label {
-        margin-bottom: 10px;
+        display: block;
+        margin-bottom: 8px;
+        color: $colortext;
+        font-weight: 500;
     }
 
     .input-content {
         width: 100%;
-        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        /* input takes available space */
+        input {
+            flex: 1 1 auto;
+            box-sizing: border-box;
+            border: 2px solid gray;
+            border-radius: 8px;
+            background-color: $backgroundColorComponentInputs;
+            padding: 12px 16px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        /* only show icon container when it actually has content */
+        .icon:empty {
+            display: none;
+        }
 
         .icon {
-            padding: 12px;
-            background-color: $backgroundColorComponentInputs;
-            border-radius: 0 8px 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 8px;
+            background-color: transparent;
+            border: none;
+            border-radius: 6px;
 
             img {
                 height: 20px;
             }
-        }
-
-        input {
-            border: none;
-            border-radius: 8px;
-            background-color: $backgroundColorComponentInputs;
-            padding: 12px 0 12px 20px;
-            width: 100%;
-            border:  2px solid gray;
         }
     }
 }
