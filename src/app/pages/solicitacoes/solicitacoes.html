@@ -1,0 +1,34 @@
+<app-default-layout-header></app-default-layout-header>
+<div class="divisor"></div>
+<main>
+  <div class="solicitacoes-container">
+    <h2>Solicitações</h2>
+    <div *ngIf="!solicitacoes || solicitacoes.length === 0" class="numSolicitacoes">
+      <p>Nenhuma solicitação encontrada.</p>
+    </div>
+
+    <div class="solicitacoes-list">
+      <div class="card" *ngFor="let s of solicitacoes">
+        <div class="card-header">
+          <div class="title">{{ s.tipoAnomalia || 'Anomalia' }}</div>
+          <div class="meta">{{ (s.dataSolicitacao || s.createdAt) | date:'short' }}</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Solicitante:</strong> {{ s.nomeSolicitante }}</p>
+          <p *ngIf="s.componenteAfetado"><strong>Componente:</strong> {{ s.componenteAfetado }}</p>
+          <p *ngIf="s.criticidade"><strong>Criticidade:</strong> {{ s.criticidade }}</p>
+          <p *ngIf="s.identificacaoEstrutura"><strong>Local:</strong> {{ s.identificacaoEstrutura }}</p>
+          <p class="observacoes"><strong>Observações:</strong> {{ s.observacoes }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <section>
+      <button [routerLink]="['/home']" class="homeBTN">
+        <img src="/assets/home.png" alt="Home">
+      </button>
+    </section>
+  </footer>
+</main>

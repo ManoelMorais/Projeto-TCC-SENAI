@@ -8,7 +8,6 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private auth: LoginService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Não adicionar header em chamadas de login/register
     if (req.url.endsWith('/login') || req.url.endsWith('/register')) {
       return next.handle(req);
     }

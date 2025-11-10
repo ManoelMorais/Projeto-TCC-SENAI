@@ -1,18 +1,18 @@
 {
   "/auth": {
-    "target": "http://localhost:8080",
+    "target": "http://localhost:9091",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
   },
   "/user": {
-    "target": "http://localhost:8080",
+    "target": "http://localhost:9091",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
   },
   "/images": {
-    "target": "http://localhost:8080",
+    "target": "http://localhost:9091",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

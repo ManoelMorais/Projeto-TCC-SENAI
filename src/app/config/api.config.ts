@@ -2,5 +2,5 @@
 // e o proxy encaminhará /auth, /user, /images para o backend local.
 // Para apontar diretamente ao backend (sem proxy) use 'http://localhost:8080' ou a URL remota.
 
-//export const API_BASE = 'https://servico-de-apontamento-de-anomalias.onrender.com';
-export const API_BASE = 'http://localhost:9091';
+export const API_BASE = 'https://servico-de-apontamento-de-anomalias.onrender.com';
+// export const API_BASE = 'http://localhost:9091';

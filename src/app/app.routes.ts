@@ -4,6 +4,7 @@ import { Auth } from './pages/auth/auth';
 import { Home } from './pages/home/home';
 import { FormularioAnomalias } from './pages/formulario-anomalias/formulario-anomalias';
 import { AuthGuard } from './guards/auth.guard';
+import { Solicitacoes } from './pages/solicitacoes/solicitacoes';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,12 @@ export const routes: Routes = [
     path: 'formulario-anomalias',
     component: FormularioAnomalias,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'solicitacoes',
+    component: Solicitacoes,
+    canActivate: [AuthGuard]
+
   },
   {
     path: '**',

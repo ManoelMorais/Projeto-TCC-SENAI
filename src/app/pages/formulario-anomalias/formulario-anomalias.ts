@@ -6,6 +6,7 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { LoginService } from '../../services/login-service';
 import { Subscription } from 'rxjs';
 import { Map } from "../../map/map";
+import { SolicitacoesService } from '../../services/solicitacoes-service';
 
 @Component({
   selector: 'app-formulario-anomalias',
@@ -27,7 +28,8 @@ export class FormularioAnomalias implements OnInit {
   form!: FormGroup;
   private userSub: Subscription | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router, private loginService: LoginService) {}
+  constructor(private fb: FormBuilder, private router: Router, private loginService: LoginService,
+    private solicitacoesService: SolicitacoesService) {}
 
   voltar() {
     this.router.navigate(['/home']);
@@ -206,8 +208,14 @@ export class FormularioAnomalias implements OnInit {
 
   submit() {
     if (this.form.valid) {
-      console.log('Dados enviados:', this.form.value);
-      console.log('Arquivos:', this.arquivos);
+      const payload = {
+        // getRawValue to include disabled fields like dataSolicitacao and nomeSolicitante
+        ...this.form.getRawValue(),
+        arquivos: this.arquivos.map(f => ({ name: f.name, size: f.size, type: f.type })),
+      };
+      // save to temporary service (and localStorage)
+      this.solicitacoesService.add(payload);
+      console.log('Dados enviados:', payload);
       this.showSuccess = true;
       this.form.markAsPristine();
       this.arquivos = [];
@@ -223,5 +231,10 @@ export class FormularioAnomalias implements OnInit {
 
   closeModal() {
     this.showSuccess = false;
+  }
+
+  goToSolicitacoes() {
+    this.showSuccess = false;
+    this.router.navigate(['/solicitacoes']);
   }
 }
